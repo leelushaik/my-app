@@ -1,6 +1,6 @@
-import { Component } from "react";
-import { Card, CardImg, CardImgOverlay, CardTitle } from "reactstrap";
-import Dishdetailed from "./DishdetailComponent";
+import React, { Component } from 'react';
+import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
+import Dishdetailed from './DishdetailComponent';
 
 class Menu extends Component {
   constructor(props) {
@@ -8,7 +8,9 @@ class Menu extends Component {
     this.state = {
       selectedDish: null,
     };
+    this.onDishSelect = this.onDishSelect.bind(this);
   }
+
   onDishSelect(dish) {
     this.setState({ selectedDish: dish });
   }
@@ -17,7 +19,7 @@ class Menu extends Component {
     const menu = this.props.dishes.map((dish) => {
       return (
         <div className="col-12 col-md-5 m-1" key={dish.id}>
-          <Card key={dish.id} onClick={() => this.onDishSelect(dish)}>
+          <Card onClick={() => this.onDishSelect(dish)}>
             <CardImg src={dish.image} alt={dish.name} />
             <CardImgOverlay>
               <CardTitle>{dish.name}</CardTitle>
@@ -26,17 +28,16 @@ class Menu extends Component {
         </div>
       );
     });
-    let selectedDish = null;
-    if (this.state.selectedDish != null) {
-      selectedDish = <Dishdetailed dish={this.state.selectedDish} />;
-    }
 
     return (
-      <div>
-        <div>{menu}</div>
-        <div>{selectedDish}</div>
+      <div className="container">
+        <div className="row">
+          {menu}
+        </div>
+        {this.state.selectedDish && <Dishdetailed dish={this.state.selectedDish} />}
       </div>
     );
   }
 }
+
 export default Menu;
